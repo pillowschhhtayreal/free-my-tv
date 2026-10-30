@@ -467,7 +467,7 @@
 
   var bgUrl = null, bgFront = 'bgA';
   // Fixed custom wallpaper. Keep this JPG beside the JavaScript file.
-  var WALLPAPER_URL = 'mountain-wallpaper-1366x768.jpg';
+  var WALLPAPER_URL = 'https://raw.githubusercontent.com/pillowschhhtayreal/free-my-tv/refs/heads/main/web/mountain-wallpaper-1366x768.jpg';
 
   /** Draw the custom wallpaper into the existing background canvas layers. */
   function backdrop(url) {
