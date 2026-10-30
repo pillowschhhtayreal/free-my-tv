@@ -1,3 +1,4 @@
+```
 /*
  * The home screen for web-app TVs (LG webOS, Samsung Tizen), with the Android app's design and behavior (HomeView):
  *  - top: the "For You" title and the tabs (Explore, Movies, Shows); icon-only glass buttons at the right (Live TV,
@@ -465,27 +466,28 @@
   }
 
   var bgUrl = null, bgFront = 'bgA';
+  // Fixed custom wallpaper. Keep this JPG beside the JavaScript file.
+  var WALLPAPER_URL = 'mountain-wallpaper-1366x768.jpg';
 
-  /** The focused pick's photo as the background: drawn tiny and stretched, it's already as soft as a heavy blur. */
+  /** Draw the custom wallpaper into the existing background canvas layers. */
   function backdrop(url) {
-    if (url === bgUrl) return;
-    bgUrl = url;
+    if (bgUrl === WALLPAPER_URL) return;
+    bgUrl = WALLPAPER_URL;
     var next = bgFront === 'bgA' ? 'bgB' : 'bgA';
-    if (!url) {
-      setClass($('bgA'), 'on', false);
-      setClass($('bgB'), 'on', false);
-      return;
-    }
     var img = new Image();
     img.onload = function () {
-      if (bgUrl !== url) return;
       var canvas = $(next), ctx = canvas.getContext('2d');
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
       setClass(canvas, 'on', true);
       setClass($(bgFront), 'on', false);
       bgFront = next;
     };
-    img.src = url;
+    img.onerror = function () {
+      // If the wallpaper file is missing, leave the app's background canvas unchanged.
+      bgUrl = null;
+    };
+    img.src = WALLPAPER_URL;
   }
 
   // As HomeView's bgFollow: the background follows the focused pick.
@@ -1698,3 +1700,4 @@
   window.FreeMyTV = {state: st, move: move, activate: activate, back: back, showSaver: showSaver, hideSaver: hideSaver, toast: toast,
     showAmbient: showAmbient, hideAmbient: hideAmbient, applyDim: applyDim};
 })();
+```
